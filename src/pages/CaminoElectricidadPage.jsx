@@ -1,44 +1,63 @@
 import { motion } from 'framer-motion';
+import SectionSlider from '../components/SectionSlider';
 
 export default function CaminoElectricidadPage() {
-    return (
-        <div className="p-8 max-w-4xl mx-auto flex flex-col gap-8 pb-16">
-            <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-4xl font-bold text-yellow-400">
-                El camino de la electricidad: los circuitos
-            </motion.h2>
+  return (
+    <div className="h-screen flex flex-col overflow-hidden p-6">
+      <SectionSlider>
+        <div className="h-full flex flex-col gap-4 overflow-hidden">
+          <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="text-3xl font-bold text-yellow-400 shrink-0">
+            El camino de la electricidad: los circuitos
+          </motion.h2>
+          <p className="text-sm text-slate-300 leading-relaxed shrink-0">
+            Para que la electricidad funcione, necesita un camino cerrado por donde fluir. A ese camino lo llamamos <strong className="text-blue-400">circuito eléctrico</strong>.
+          </p>
 
-            <p className="text-lg text-slate-300 leading-relaxed">
-                Para que la electricidad funcione, necesita un camino cerrado por donde fluir[cite: 2]. A ese camino lo llamamos circuito eléctrico[cite: 2].
+          <div className="flex-1 bg-slate-900/50 border border-slate-700 rounded-2xl flex items-center justify-center min-h-0">
+            <div className="text-center text-slate-500 p-4">
+              <p className="text-sm">Video: Circuito animado</p>
+              <p className="text-xs text-slate-600 mt-1">/videos/circuito-animado.mp4</p>
+            </div>
+          </div>
+
+          <div className="bg-blue-900/30 border border-blue-700/50 rounded-xl p-3 shrink-0">
+            <p className="text-xs text-blue-200 leading-relaxed">
+              <strong>¿Sabías qué?</strong> Las luces navideñas modernas usan circuitos en paralelo para evitar apagones completos.
             </p>
-
-            {/* VIDEO EN BUCLE DEL CIRCUITO */}
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl my-4">
-                <video autoPlay loop muted playsInline className="w-full h-auto">
-                    <source src="/videos/circuito-animado.mp4" type="video/mp4" />
-                </video>
-            </div>
-
-            <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-lg mt-4">
-                <h3 className="text-2xl font-bold text-blue-400 mb-6">Partes de un circuito</h3>
-                <ul className="space-y-4">
-                    <li className="flex items-start gap-4">
-                        <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0">1</span>
-                        <p className="text-slate-300 text-lg"><strong>Fuente de energía:</strong> pila o batería[cite: 2].</p>
-                    </li>
-                    <li className="flex items-start gap-4">
-                        <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0">2</span>
-                        <p className="text-slate-300 text-lg"><strong>Conductores:</strong> cables que conectan todo[cite: 2].</p>
-                    </li>
-                    <li className="flex items-start gap-4">
-                        <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0">3</span>
-                        <p className="text-slate-300 text-lg"><strong>Interruptor:</strong> para abrir o cerrar el paso de la electricidad[cite: 2].</p>
-                    </li>
-                    <li className="flex items-start gap-4">
-                        <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0">4</span>
-                        <p className="text-slate-300 text-lg"><strong>Carga:</strong> lo que consume la energía, como un LED[cite: 2].</p>
-                    </li>
-                </ul>
-            </div>
+          </div>
         </div>
-    );
+
+        <div className="h-full flex flex-col gap-3 overflow-hidden">
+          <h3 className="text-xl font-bold text-blue-400 shrink-0">Partes de un circuito</h3>
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 min-h-0">
+            {[
+              { num: '1', title: 'Fuente de energía', desc: 'Pila o batería', color: 'from-yellow-500 to-orange-600' },
+              { num: '2', title: 'Conductores', desc: 'Cables que conectan todo', color: 'from-blue-500 to-indigo-600' },
+              { num: '3', title: 'Interruptor', desc: 'Abre o cierra el paso de electricidad', color: 'from-green-500 to-emerald-600' },
+              { num: '4', title: 'Carga', desc: 'Lo que consume la energía, como un LED', color: 'from-red-500 to-rose-600' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.4 }}
+                className={`bg-gradient-to-br ${item.color} bg-opacity-10 border border-slate-700 rounded-2xl p-4 flex items-center gap-4`}
+              >
+                <span className="bg-white/20 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0">
+                  {item.num}
+                </span>
+                <div>
+                  <p className="text-white font-semibold text-sm">{item.title}</p>
+                  <p className="text-white/70 text-xs">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+            className="text-xs text-slate-400 italic shrink-0">
+            ¿Qué tipo de circuito crees que usaremos en nuestro proyecto de iluminación?
+          </motion.p>
+        </div>
+      </SectionSlider>
+    </div>
+  );
 }
