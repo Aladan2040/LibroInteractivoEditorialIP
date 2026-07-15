@@ -9,6 +9,7 @@ import ProtoboardPage from './pages/ProtoboardPage';
 import ComoConectarLEDPage from './pages/ComoConectarLEDPage';
 import ResistenciasPage from './pages/ResistenciasPage';
 import ActividadPage from './pages/ActividadPage';
+import MicrobitPage from './pages/MicrobitPage';
 
 export default function App() {
     return (
@@ -25,6 +26,7 @@ export default function App() {
                     <Route path="/como-conectar-led" element={<ComoConectarLEDPage />} />
                     <Route path="/resistencias" element={<ResistenciasPage />} />
                     <Route path="/actividad" element={<ActividadPage />} />
+                    <Route path="/microbit" element={<MicrobitPage />} />
                 </Routes>
             </div>
         </BrowserRouter>
