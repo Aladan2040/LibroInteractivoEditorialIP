@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-luminaria-dark: #0f172a;
+  --color-luminaria-accent: #fbbf24;
+}
+
+body {
+  background-color: var(--color-luminaria-dark);
+  color: white;
+  margin: 0;
+  overflow: hidden;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #334155;
+  border-radius: 4px;
+}

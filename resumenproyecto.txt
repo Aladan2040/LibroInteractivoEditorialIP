@@ -1,0 +1,73 @@
+📖 Documento de Contexto del Proyecto: "Luminaria - Sistema Inteligente de Luces"
+🎯 1. Objetivo General del Proyecto
+El proyecto consiste en la creación de una Single Page Application (SPA) interactiva y educativa orientada a enseñar los fundamentos de la electricidad, circuitos y programación básica con Arduino.
+Esta aplicación web actuará como un "Libro Interactivo" moderno y gamificado que reemplaza las limitaciones visuales de H5P. La aplicación será desplegada en Vercel y sus distintas rutas serán incrustadas a través de iframes dentro de un curso de Moodle.
+
+Restricción principal: La aplicación es 100% Client-Side (Stateless). No hay backend, no hay base de datos, ni se guardan calificaciones en Moodle. Todo el progreso y validación ocurre en tiempo real en el navegador usando estados de React.
+
+🛠 2. Stack Tecnológico
+Framework: React 18+ empaquetado con Vite.
+
+Enrutamiento: react-router-dom (Navegación interna por capítulos sin recargar la página).
+
+Estilos: Tailwind CSS v4 (Configuración directa en index.css vía @theme, sin postcss).
+
+Animaciones: framer-motion (Para transiciones de página, modales emergentes y aparición de elementos).
+
+Íconos: lucide-react.
+
+Visualización 3D: @google/model-viewer (Para renderizar componentes de hardware como .glb con hotspots interactivos).
+
+Linter: ESLint.
+
+Entorno de Desarrollo: WebStorm sobre Zorin OS (Linux).
+
+🎨 3. Guía de Diseño y UI/UX
+Tema Visual: Modo Oscuro ("Dark Mode") obligatorio. El diseño se basa en la narrativa de un pueblo a oscuras (Luminaria). Se utilizan colores oscuros (bg-slate-900, #0B1120) con acentos brillantes (textos amarillos text-yellow-400 para títulos principales, y azules/neón para interacciones y LEDs).
+
+Layout Global: El body tiene overflow: hidden para evitar el doble scroll al incrustarse en Moodle. El desplazamiento (overflow-y-auto) se maneja internamente dentro de los componentes principales con una clase personalizada de scrollbar (.custom-scrollbar).
+
+Navegación: Un menú principal (HomePage.jsx) con un Grid de tarjetas. Algunas páginas incluyen botones de "Siguiente/Anterior" o un botón de "Volver al índice".
+
+🏗 4. Arquitectura y Estado Actual
+El proyecto se divide por rutas, cada una representando una página/capítulo del manual:
+
+Enrutador (App.jsx): Configurado con <BrowserRouter> y un contenedor base oscuro.
+
+Home / Índice (/ -> HomePage.jsx): Cuadrícula animada con enlaces a los diferentes módulos.
+
+Teoría Narrativa (/desafio, /electricidad, /camino-electricidad): Componentes que muestran la historia, explicaciones teóricas e imágenes estáticas/videos .mp4 en bucle. Todo entra en pantalla suavemente usando variantes de framer-motion.
+
+Teoría Interactiva con Modales (/tipos-corriente, /tipos-circuitos): Páginas con tarjetas visuales que, al hacerles clic, abren un Modal flotante (con fondo difuminado backdrop-blur) usando <AnimatePresence> para explicar conceptos específicos.
+
+Explorador 3D (Arduino3D.jsx): Interfaz que carga un modelo arduino.glb usando <model-viewer>. Utiliza hotspots interactivos mapeados en coordenadas exactas 3D (data-position). Al hacer clic en un hotspot (ej. Microcontrolador, USB), un estado en React (activePart) dispara una tarjeta lateral animada con información teórica.
+
+Simulador de Código / Mini IDE (IDEPage.jsx): Una pantalla dividida en dos paneles:
+
+Panel Izquierdo: Un editor de código fake construido con un <textarea> oscuro.
+
+Panel Derecho: Un visualizador de hardware donde un LED se representa mediante CSS (cambiando su box-shadow e iluminación).
+
+Lógica: Al presionar "Compilar", una función lee el string del textarea, limpia los espacios y utiliza expresiones regulares o includes para validar comandos específicos en C++ (ej. digitalWrite(5, HIGH);). Actualiza el estado del LED y devuelve un mensaje por la "terminal" falsa.
+
+🚀 5. Próximos Pasos y Objetivos de Desarrollo (Hacia dónde vamos)
+A medida que el proyecto avance, la IA debe asistir en:
+
+Nuevos Capítulos Interactivos: Transformar partes restantes del manual físico (como el circuito con pulsador, resistencias pull-down, o LEDs RGB) en nuevas páginas de React.
+
+Complejidad del Mini IDE: Ampliar el parser de código del IDEPage.jsx para que entienda bucles (ej. for(int i=0; i<5; i++)), múltiples delay(), secuencias de luces (barridos, parpadeos), condicionales (if/else), y estados lógicos del pulsador (digitalRead).
+
+Simulaciones Físicas Avanzadas: Integrar lógica visual de cables y protoboards, o manejar interactividad condicional (ej. "Si no hay resistencia conectada, simular que el LED se quema").
+
+Manejo de Activos: Mantenimiento de las rutas de imágenes, videos y modelos .glb dentro del directorio /public.
+
+🧠 6. Reglas para la IA al generar código
+Usa siempre componentes funcionales de React (export default function NombreComponente()).
+
+Aplica clases de Tailwind CSS v4 para todos los estilos (no CSS externo excepto el scrollbar o el tema global en index.css).
+
+Mantén las animaciones fluidas pero no excesivas usando framer-motion.
+
+Asume que todo estado es efímero (se pierde al recargar) y usa useState o useEffect estándar.
+
+Documenta la lógica de validación de texto (parsing de C++) claramente, ya que es el núcleo educativo del simulador.
